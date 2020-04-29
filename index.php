@@ -118,7 +118,7 @@ if ($_POST['submitbutton'] == "Release" ) {
       'placedate' => $_POST['placedate'],
       'allot' => $_POST['allot']
     ];
-    $statement2 = $pdo->execute($params);
+    $statement2->execute($params);
 
     $submitmessage = "Removed your allot for " . htmlspecialchars($allotlabels[$_POST['allot']]). " on ".htmlspecialchars($_POST['placedate']);
   } else {
