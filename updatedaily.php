@@ -6,9 +6,9 @@ include("settings.php");
 
 $query = "SELECT * FROM places WHERE placedate = :placedate";
 $statement = $pdo->prepare($query);
-$params = ['place_date' => date('Y-m-d', (time() - 86400))];
-$stamement->execute($query, $params);
-$result = $statemetn->fetchAll();
+$params = ['placedate' => date('Y-m-d', (time() - 86400))];
+$statement->execute($params);
+$result = $statement->fetchAll();
 
 if (count($result) > 0) {
   foreach($result as $row) {
