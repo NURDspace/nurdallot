@@ -50,6 +50,7 @@ $userallots = count($allots);
 
 if ($_POST['submitbutton'] == "Allot" ) {
 
+  if(!is_numeric($_POST['allot'])) die("FUCK YOU");
   // before first  :D  check if user already reserved this slot
 
   if (isset($allots[$_POST['placedate']."_".$_POST['allot']])) {
@@ -65,7 +66,6 @@ if ($_POST['submitbutton'] == "Allot" ) {
       if ($places[$_POST['placedate']."_".$_POST['allot']] > 0) {
 
         // lastly, execute stuff
-
         $query = "UPDATE places SET places = places - 1 WHERE placedate = :placedate AND allot = :allot";
         $statement = $pdo->prepare($query);
         $params = [
@@ -102,8 +102,6 @@ if ($_POST['submitbutton'] == "Release" ) {
   // check if placeID doesnt get over $allotplaces (hmm, nah)
 
   // execute stuff (delete allot & update places)
-
-
   $query = "DELETE FROM allots WHERE uid = :uid AND allotID = :allot_id";
   $statement = $pdo->prepare($query);
   $params = [
