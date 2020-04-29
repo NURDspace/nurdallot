@@ -1,0 +1,2 @@
+create table places (    placeID INTEGER PRIMARY KEY,     placedate date,     allot int,     places int);
+create table allots ( allotID INTEGER PRIMARY KEY, uid varchar(255), placeID int);

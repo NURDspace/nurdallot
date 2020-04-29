@@ -1,4 +1,6 @@
-<?
+<?php
+
+error_reporting(E_ALL | E_STRICT);
 
 $daysinadvance = 7;
 $maxallots = 4;
@@ -11,9 +13,10 @@ $minutesforwardallowed = 10; // how many minutes -before- allot the key starts w
 // ok i'm lazy
 $allotlabels = array(0 => "0:00-4:00", 1 => "4:00-8:00", 2 => "8:00-12:00", 3 => "12:00-16:00", 4 => "16:00-20:00", 5 => "20:00-24:00");
 
-$mysql = new mysqli("localhost", "nurdallot", "yoursqlpasswd", "nurdallot");
-if ($mysql->connect_error) {
-    die("Connection failed: " . $mysql->connect_error);
-}
+$shib_uid = $_SERVER['Shib-uid'];
+
+// $pdo = new PDO("mysql:host=localhost;dbname=nurdalllot", "nurdallot", "yoursqlpasswd", [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+$pdo = new PDO("sqlite:nurdallot.sqlite", "", "", [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
 ?>
+
