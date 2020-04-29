@@ -30,7 +30,7 @@ if (count($result) > 0) {
     if ($j > 0) $query .= ", ";
     $query .= "('".date('Y-m-d', (time() + (($daysinadvance-1) * 86400)))."', '".$j."', '". $allotplaces. "')";
   }
-  $pdo->prepare($query);
+  $statement = $pdo->prepare($query);
   $statement->execute();
 
 } else {
