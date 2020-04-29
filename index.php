@@ -84,7 +84,9 @@ if ($_POST['submitbutton'] == "Release" ) {
   // execute stuff (delete allot & update places)
 
 
-  $query = "DELETE FROM allots WHERE uid = '".$_SERVER['Shib-uid']."' AND allotID = '".mysql_real_escape_string($_POST['allotID'])."'";
+  if(!is_numeric($_POST['allotID'])) die("FUCK YOU");
+  $query = "DELETE FROM allots WHERE uid = '".$_SERVER['Shib-uid']."' AND allotID = ".$_POST['allotID'];
+
   $result = $mysql->query($query);
 
   if ($mysql->affected_rows > 0) {
