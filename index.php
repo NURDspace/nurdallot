@@ -70,7 +70,7 @@ if ($_POST['submitbutton'] == "Allot" ) {
         $statement = $pdo->prepare($query);
         $params = [
           'placedate' => $_POST['placedate'],
-          'allot' => $_POST['allot']  
+          'allot' => $_POST['allot']
         ];
         $statement->execute($params);
         $result = $statement->fetchAll();
@@ -79,7 +79,7 @@ if ($_POST['submitbutton'] == "Allot" ) {
         $statement = $pdo->prepare($query);
         $params = [
           'uid' => $shib_uid,
-          'placeid' => $placeIDrevlookup[$_POST['placedate']."_".$_POST['allot']]  
+          'placeid' => $placeIDrevlookup[$_POST['placedate']."_".$_POST['allot']]
         ];
         $statement->execute($params);
         $result = $statement->fetchAll();
@@ -109,16 +109,16 @@ if ($_POST['submitbutton'] == "Release" ) {
     'allot_id' => $_POST['allotID']
   ];
   $statement->execute($params);
-  $result = $statement->fetchAll();
-
-  if (count($result) > 0) {
+  $count = $statement->rowCount();
+	  
+  if ($count > 0) {
     $query = "UPDATE places SET places = places + 1 WHERE placedate = :placedate AND allot = :allot";
-    $statement = $pdo->prepare($query);
+    $statement2 = $pdo->prepare($query);
     $params = [
       'placedate' => $_POST['placedate'],
       'allot' => $_POST['allot']
     ];
-    $result = $pdo->execute($query, $params);
+    $statement2 = $pdo->execute($params);
 
     $submitmessage = "Removed your allot for " . htmlspecialchars($allotlabels[$_POST['allot']]). " on ".htmlspecialchars($_POST['placedate']);
   } else {
