@@ -44,6 +44,7 @@ $allots = [];
 
 foreach($result as $row) {
   $allots[$placeIDlookup[$row["placeID"]]] = array ( $row['allotID'], $row['placeID'] );
+  $allotslookup[$row["allotID"]] = $row['placeID'];
 }
 
 $userallots = count($allots);
@@ -112,11 +113,10 @@ if ($_POST['submitbutton'] == "Release" ) {
   $count = $statement->rowCount();
 	  
   if ($count > 0) {
-    $query = "UPDATE places SET places = places + 1 WHERE placedate = :placedate AND allot = :allot";
+    $query = "UPDATE places SET places = places + 1 WHERE placeID = :placeID";
     $statement2 = $pdo->prepare($query);
     $params = [
-      'placedate' => $_POST['placedate'],
-      'allot' => $_POST['allot']
+      'placeID' => $allotslookup[$_POST['allotID']]
     ];
     $statement2->execute($params);
 
@@ -149,9 +149,11 @@ $statement->execute($params);
 $result = $statement->fetchAll();
 
 $allots = Array();
+$allotslookup = Array();
 
 foreach($result as $row) {
   $allots[$placeIDlookup[$row["placeID"]]] = array ( $row['allotID'], $row['placeID'] );
+  $allotslookup[$row["allotID"]] = $row['placeID'];
 }
 
 $userallots = count ($allots);
