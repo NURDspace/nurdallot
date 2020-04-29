@@ -42,6 +42,7 @@ $userallots = count ($allots);
 
 if ($_POST['submitbutton'] == "Allot" ) {
 
+  if(!is_numeric($_POST['allot'])) die("FUCK YOU");
   // before first  :D  check if user already reserved this slot
 
   if (isset($allots[$_POST['placedate']."_".$_POST['allot']])) {
@@ -58,7 +59,7 @@ if ($_POST['submitbutton'] == "Allot" ) {
 
         // lastly, execute stuff
 
-        $query = "UPDATE places SET places = places - 1 WHERE placedate = '".mysql_real_escape_string($_POST['placedate'])."' AND allot = '".mysql_real_escape_string($_POST['allot'])."'";
+        $query = "UPDATE places SET places = places - 1 WHERE placedate = '".mysqli_real_escape_string($mysql,$_POST['placedate'])."' AND allot = '".$_POST['allot']."'";
         $result = $mysql->query($query);
 
         $query = "INSERT INTO allots (uid, placeid) VALUES ('".$_SERVER['Shib-uid']."', '".$placeIDrevlookup[$_POST['placedate']."_".$_POST['allot']]."')";
@@ -83,14 +84,13 @@ if ($_POST['submitbutton'] == "Release" ) {
 
   // execute stuff (delete allot & update places)
 
-
-  if(!is_numeric($_POST['allotID'])) die("FUCK YOU");
-  $query = "DELETE FROM allots WHERE uid = '".$_SERVER['Shib-uid']."' AND allotID = ".$_POST['allotID'];
-
+    if(!is_numeric($_POST['allotID'])) die("FUCK YOU");
+    if(!is_numeric($_POST['allot'])) die("FUCK YOU");
+  $query = "DELETE FROM allots WHERE uid = '".$_SERVER['Shib-uid']."' AND allotID = '".$_POST['allotID'] . "'";
   $result = $mysql->query($query);
 
   if ($mysql->affected_rows > 0) {
-    $query = "UPDATE places SET places = places + 1 WHERE placedate = '".mysql_real_escape_string($_POST['placedate'])."' AND allot = '".mysql_real_escape_string($_POST['allot'])."'";
+    $query = "UPDATE places SET places = places + 1 WHERE placedate = '".mysqli_real_escape_string($mysql, $_POST['placedate'])."' AND allot = '".$_POST['allot']."'";
     $result = $mysql->query($query);
 
     $submitmessage = "Removed your allot for ".$allotlabels[$_POST['allot']]. " on ".$_POST['placedate'];
