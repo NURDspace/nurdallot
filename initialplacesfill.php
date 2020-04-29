@@ -1,4 +1,4 @@
-<?
+<?php
 
 include("settings.php");
 
@@ -10,7 +10,7 @@ for ($i = 0; $i < $daysinadvance; $i++) {
     $query .= "('".date('Y-m-d', (time() + ($i * 86400)))."', '".$j."', '". $allotplaces. "')";
   }
 //  print $query."\n";
-  $mysql->query($query);
+  $pdo->exec($query);
 }
 
 ?>

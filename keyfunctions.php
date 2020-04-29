@@ -1,4 +1,4 @@
-<?
+<?php
 
 function enableuser( $user ) {
   // add your hackerspaces methods for key management here
