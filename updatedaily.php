@@ -20,7 +20,7 @@ if (count($result) > 0) {
 
    //and remove the places themselves
    $query = "DELETE FROM places WHERE placeID= :place_id";
-   $pdo->prepare($query);
+   $statement = $pdo->prepare($query);
    $params = ['place_id' => $row['placeID']];
    $statement->execute($params);
   }
